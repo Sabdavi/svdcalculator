@@ -28,8 +28,32 @@ class SaeidCalc:
 
         return matrix
 
-    def row_reduction(self):
-        pass
+    def row_reduction(self, matrix):
+        if not matrix:
+            return
+        lead = 0
+        row_count = len(matrix)
+        column_count = len(matrix[0])
+        for r in range(row_count):
+            if lead >= column_count:
+                return
+            i = r
+            while matrix[i][lead] == 0:
+                i += 1
+                if i == row_count:
+                    i = r
+                    lead += 1
+                    if column_count == lead:
+                        return
+            matrix[i], matrix[r] = matrix[r], matrix[i]
+            lv = matrix[r][lead]
+            matrix[r] = [mrx / float(lv) for mrx in matrix[r]]
+            for i in range(row_count):
+                if i != r:
+                    lv = matrix[i][lead]
+                    matrix[i] = [iv - lv * rv for rv, iv in zip(matrix[r], matrix[i])]
+            lead += 1
+        return matrix
 
 
 if __name__ == '__main__':
@@ -38,3 +62,6 @@ if __name__ == '__main__':
     calc = SaeidCalc(matrixA, matrixB)
     print(calc.subtract())
 
+    matrixC = [[10, 10], [10, 10]]
+    calc.row_reduction(matrixC)
+    print(matrixC)
