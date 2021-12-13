@@ -1,23 +1,6 @@
 ###################################
 ########## Calculator Class
 ###################################
-class Calculator:
-    def __init__(self):
-        pass
-
-    def add(self):
-        pass
-
-    def subtract(self):
-        pass
-
-    def multiply(self):
-        pass
-
-    def svd(self):
-        pass
-
-
 
 ###################################
 ########## Matrix Class
@@ -46,11 +29,13 @@ class Matrix:
         Transpose of a matrix. Each elements [i,j] of the transposed matrix is just the [j,i] elements of the old matrix
         :return:
         """
-        rows,cols = self.dimension()
-        new_matrix = [[0 for _ in range(rows)] for __ in range(cols)] # create a new matrix with columns as row and vice versa
+        rows, cols = self.dimension()
+        new_matrix = [[0 for _ in range(rows)] for __ in
+                      range(cols)]  # create a new matrix with columns as row and vice versa
 
         for i in range(rows):
-            for j in range(cols): # interchange the elements, put the 1st element of each of the lists in the 1st list, and so on and so forth
+            for j in range(
+                    cols):  # interchange the elements, put the 1st element of each of the lists in the 1st list, and so on and so forth
                 new_matrix[j][i] = self._matrix[i][j]
         return new_matrix
 
