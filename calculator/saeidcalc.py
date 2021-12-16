@@ -1,7 +1,6 @@
 class SaeidCalc:
-    def __init__(self, matrix_a, matrix_b):
-        self.matrix_a = matrix_a
-        self.matrix_b = matrix_b
+    def __init__(self):
+        pass
 
     def create_empty_matrix(self, rows, cols):
         empty_matrix = []
@@ -12,11 +11,11 @@ class SaeidCalc:
 
         return empty_matrix
 
-    def subtract(self):
-        rows_a = len(self.matrix_a)
-        cols_a = len(self.matrix_a[0])
-        rows_b = len(self.matrix_b)
-        cols_b = len(self.matrix_b[0])
+    def subtract(self, matrix_a, matrix_b):
+        rows_a = len(matrix_a)
+        cols_a = len(matrix_a[0])
+        rows_b = len(matrix_b)
+        cols_b = len(matrix_b[0])
 
         if rows_a != rows_b or cols_a != cols_b:
             raise ArithmeticError('Matrices are NOT the same size.')
@@ -30,7 +29,7 @@ class SaeidCalc:
 
     def row_reduction(self, matrix):
         if not matrix:
-            return
+            raise ArithmeticError('Matrices are NOT provided')
         lead = 0
         row_count = len(matrix)
         column_count = len(matrix[0])
@@ -51,17 +50,26 @@ class SaeidCalc:
             for i in range(row_count):
                 if i != r:
                     lv = matrix[i][lead]
-                    matrix[i] = [iv - lv * rv for rv, iv in zip(matrix[r], matrix[i])]
+                    if lv != 0:
+                        matrix[i] = [iv - lv * rv for rv, iv in zip(matrix[r], matrix[i])]
             lead += 1
+        return self.__round(matrix)
+
+    def __round(self, matrix):
+        for i in range(len(matrixC)):
+            for j in range(len(matrixC[0])):
+                matrixC[i][j] = round(matrixC[i][j])
         return matrix
 
 
 if __name__ == '__main__':
-    matrixA = [[1, 5], [4, 5]]
-    matrixB = [[2, 15], [14, 25]]
-    calc = SaeidCalc(matrixA, matrixB)
-    print(calc.subtract())
+    calc = SaeidCalc()
 
-    matrixC = [[10, 10], [10, 10]]
-    calc.row_reduction(matrixC)
-    print(matrixC)
+    matrixC = [[0, -7, -4, 2],
+               [2, 4, 6, 12],
+               [3, 1, -1, -2]]
+
+    reduction = calc.row_reduction(matrixC)
+
+    print(reduction)
+
