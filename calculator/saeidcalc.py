@@ -56,9 +56,9 @@ class SaeidCalc:
         return self.__round(matrix)
 
     def __round(self, matrix):
-        for i in range(len(matrixC)):
-            for j in range(len(matrixC[0])):
-                matrix[i][j] = round(matrixC[i][j])
+        for i in range(len(matrix)):
+            for j in range(len(matrix[0])):
+                matrix[i][j] = round(matrix[i][j])
         return matrix
 
 
