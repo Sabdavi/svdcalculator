@@ -46,16 +46,16 @@ class SaeidCalc:
                         return
             matrix[i], matrix[r] = matrix[r], matrix[i]
             lv = matrix[r][lead]
-            matrix[r] = [mrx / float(lv) for mrx in matrix[r]]
+            matrix[r] = [mrx / lv for mrx in matrix[r]]
             for i in range(row_count):
                 if i != r:
                     lv = matrix[i][lead]
                     if lv != 0:
                         matrix[i] = [iv - lv * rv for rv, iv in zip(matrix[r], matrix[i])]
             lead += 1
-        return self.__round(matrix)
+        return matrix
 
-    def __round(self, matrix):
+    def round(self, matrix):
         for i in range(len(matrix)):
             for j in range(len(matrix[0])):
                 matrix[i][j] = round(matrix[i][j])
@@ -65,11 +65,11 @@ class SaeidCalc:
 if __name__ == '__main__':
     calc = SaeidCalc()
 
-    matrixC = [[0, -7, -4, 2],
-               [2, 4, 6, 12],
-               [3, 1, -1, -2]]
+    matrix = [[1, 2, 3, 4],
+              [5, 6, 7, 8],
+              [9, 10, 11, 12],
+              [13, 14, 15, 16]]
 
-    reduction = calc.row_reduction(matrixC)
-
-    print(reduction)
-
+    calc.row_reduction(matrix)
+    calc.round(matrix)
+    print(matrix)
