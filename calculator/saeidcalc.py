@@ -23,7 +23,7 @@ class SaeidCalc:
         matrix = self.create_empty_matrix(rows_a, cols_a)
         for i in range(rows_a):
             for j in range(cols_a):
-                matrix[i][j] = self.matrix_a[i][j] - self.matrix_b[i][j]
+                matrix[i][j] = matrix_a[i][j] - matrix_b[i][j]
 
         return matrix
 
