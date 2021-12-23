@@ -40,7 +40,7 @@ class Calculator:
     def calculate_multiply(self, matrix_a, matrix_b):
         pass
 
-    def transpose(self):
+    def transpose(self, matrix):
         pass
 
     def subtract(self, matrix_a, matrix_b):
@@ -58,8 +58,6 @@ class Calculator:
                 matrix[i][j] = matrix_a[i][j] - matrix_b[i][j]
 
         return matrix
-
-
 
     def row_reduction(self, matrix):
         if not matrix:
