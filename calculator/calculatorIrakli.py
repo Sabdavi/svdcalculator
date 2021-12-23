@@ -25,7 +25,7 @@ def __add__(self, other):
     return new_matrix
 
 
-
+# Zero Matrix
 def zero_matrix(rows, cols):
   matrix = []
   while len(matrix) < rows:
@@ -34,7 +34,7 @@ def zero_matrix(rows, cols):
       matrix[-1].append(0.0)
 
   return matrix
-
+# Identity Matrix
 def identity_matrix(m):
   idmatrix = zero_matrix(m,m)
   for element in range(m):
