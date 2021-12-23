@@ -53,7 +53,6 @@ class SaeidCalc:
                     if lv != 0:
                         matrix[i] = [iv - lv * rv for rv, iv in zip(matrix[r], matrix[i])]
             lead += 1
-        return self.round(matrix)
 
     def round(self, matrix):
         for i in range(len(matrix)):
@@ -70,6 +69,6 @@ if __name__ == '__main__':
               [9, 10, 11, 12],
               [13, 14, 15, 16]]
 
-    calc.row_reduction(matrix)
-    calc.round(matrix)
+    s1 = calc.row_reduction(matrix)
+    #calc.round(matrix)
     print(matrix)

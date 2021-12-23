@@ -1,3 +1,6 @@
+from copy import deepcopy
+
+
 class Calculator:
     def __init__(self):
         pass
@@ -17,11 +20,25 @@ class Calculator:
 
         return empty_matrix
 
-    def __round(self, matrix):
+    def round(self, matrix):
         for i in range(len(matrix)):
             for j in range(len(matrix[0])):
                 matrix[i][j] = round(matrix[i][j])
         return matrix
+
+    def __del_row(self, matrix, row):
+        clone = deepcopy(matrix)
+        del clone[row]
+        return clone
+
+    def __del_column(self, matrix, col):
+        # removing the the element with index "col" of from every row
+        # use of List comprehension
+        return [row[:col] + row[col + 1:] for row in matrix]
+
+    def __del_row_col(self, matrix, row, col):
+        reduced_matrix = self.__del_row(self.__del_column(matrix, col), row)
+        return reduced_matrix
 
     def calculate_determinant(self, matrix):
         if not self.__is_square(matrix):
@@ -33,7 +50,7 @@ class Calculator:
             result = 0
             for i in range(rows):
                 # find cofactor for each element of the first row and store the sum in result
-                c = (-1) ** (1 + (i + 1)) * matrix[0][i] * self.__determinant(self.del_row_col(matrix, 0, i))
+                c = (-1) ** (1 + (i + 1)) * matrix[0][i] * self.calculate_determinant(self.__del_row_col(matrix, 0, i))
                 result = result + c
             return result
 
@@ -85,4 +102,3 @@ class Calculator:
                     if lv != 0:
                         matrix[i] = [iv - lv * rv for rv, iv in zip(matrix[r], matrix[i])]
             lead += 1
-        return self.__round(matrix)
