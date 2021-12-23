@@ -54,8 +54,43 @@ class Calculator:
                 result = result + c
             return result
 
-    def calculate_multiply(self, matrix_a, matrix_b):
-        pass
+    @staticmethod
+    def multiply(A, B):
+        # a variable to store the final multiplication result (a 2d array)
+        result = []
+        # if the passed argument if a scalar (float,int) perform scalar multiplication
+        if isinstance(B, (int, float)):
+            # use of list comprehension to perform the multiplication
+            result = [[element * B for element in row] for row in
+                      A.mMatrix]
+
+        # if the passed argument is another Matrix object
+        elif isinstance(B, Matrix):
+            M1 = A.mMatrix
+            M2 = B.mMatrix
+            # if the the condition for matrix multiplication applies (columns of M1 = rows of M2)
+            if len(M1[0]) == len(M2):
+                for i in range(len(M1)):
+                    result.append([])
+                    for j in range(len(M2[0])):
+                        row = M1[i]
+                        # retrieving column j from matrix M2
+                        column = Matrix.get_column(M2, j)
+                        # perform dot products of the ith row of M1 and jth column of M2 and append result
+                        result[i].append(Matrix.__dot_product(row, column))
+            # if multiplication condition does not apply set result to None
+            else:
+                result = None
+        # if passed argument is not supported set result to None
+        else:
+            result = None
+
+        if result is not None:
+            # if result is not None create a Matrix Object and return it
+            return Matrix(result)
+        else:
+            return None
+        
 
     def transpose(self, matrix):
         pass
