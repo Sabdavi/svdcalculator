@@ -5,7 +5,8 @@ class Calculator:
     def __init__(self):
         pass
 
-    def __is_square(self, matrix):
+    @staticmethod
+    def __is_square(matrix):
         for row in matrix:
             if len(matrix) != len(row):
                 return False
@@ -25,23 +26,39 @@ class Calculator:
             for j in range(len(matrix[0])):
                 matrix[i][j] = round(matrix[i][j])
         return matrix
+    
+    @staticmethod
+    def get_column(matrix, col):
+        return [row[col] for row in matrix]
 
-    def __del_row(self, matrix, row):
+    @staticmethod
+    def __dot_product(v1, v2):
+        size = len(v1)
+        result = 0
+        for i in range(size):
+            result = result + (v1[i] * v2[i])
+        return result
+
+    @staticmethod
+    def __del_row(matrix, row):
         clone = deepcopy(matrix)
         del clone[row]
         return clone
 
-    def __del_column(self, matrix, col):
+    @staticmethod
+    def __del_column(matrix, col):
         # removing the the element with index "col" of from every row
         # use of List comprehension
         return [row[:col] + row[col + 1:] for row in matrix]
 
-    def __del_row_col(self, matrix, row, col):
-        reduced_matrix = self.__del_row(self.__del_column(matrix, col), row)
+    @staticmethod
+    def __del_row_col(matrix, row, col):
+        reduced_matrix = Calculator.__del_row(Calculator.__del_column(matrix, col), row)
         return reduced_matrix
 
-    def calculate_determinant(self, matrix):
-        if not self.__is_square(matrix):
+    @staticmethod
+    def calculate_determinant(matrix):
+        if not Calculator.__is_square(matrix):
             raise ArithmeticError('The matrix should be square')
         rows = len(matrix)
         if rows == 2:
@@ -50,47 +67,36 @@ class Calculator:
             result = 0
             for i in range(rows):
                 # find cofactor for each element of the first row and store the sum in result
-                c = (-1) ** (1 + (i + 1)) * matrix[0][i] * self.calculate_determinant(self.__del_row_col(matrix, 0, i))
+                c = (-1) ** (1 + (i + 1)) * matrix[0][i] * Calculator.calculate_determinant(Calculator.__del_row_col(matrix, 0, i))
                 result = result + c
             return result
 
     @staticmethod
-    def multiply(A, B):
+    def multiply(matrix1, matrix2):
         # a variable to store the final multiplication result (a 2d array)
         result = []
         # if the passed argument if a scalar (float,int) perform scalar multiplication
-        if isinstance(B, (int, float)):
+        if isinstance(matrix2, (int, float)):
             # use of list comprehension to perform the multiplication
-            result = [[element * B for element in row] for row in
-                      A.mMatrix]
+            result = [[element * matrix2 for element in row] for row in
+                      matrix1.mMatrix]
 
         # if the passed argument is another Matrix object
-        elif isinstance(B, Matrix):
-            M1 = A.mMatrix
-            M2 = B.mMatrix
-            # if the the condition for matrix multiplication applies (columns of M1 = rows of M2)
-            if len(M1[0]) == len(M2):
-                for i in range(len(M1)):
+        elif isinstance(matrix2, list):
+            # if the the condition for matrix multiplication applies (columns of matrix1 = rows of matrix2)
+            if len(matrix1[0]) == len(matrix2):
+                for i in range(len(matrix1)):
                     result.append([])
-                    for j in range(len(M2[0])):
-                        row = M1[i]
-                        # retrieving column j from matrix M2
-                        column = Matrix.get_column(M2, j)
-                        # perform dot products of the ith row of M1 and jth column of M2 and append result
-                        result[i].append(Matrix.__dot_product(row, column))
-            # if multiplication condition does not apply set result to None
+                    for j in range(len(matrix2[0])):
+                        row = matrix1[i]
+                        # retrieving column j from matrix matrix2
+                        column = Calculator.get_column(matrix2, j)
+                        # perform dot products of the ith row of matrix1 and jth column of matrix2 and append result
+                        result[i].append(Calculator.__dot_product(row, column))
+                return result
+            # if multiplication condition does not apply throw an exception
             else:
-                result = None
-        # if passed argument is not supported set result to None
-        else:
-            result = None
-
-        if result is not None:
-            # if result is not None create a Matrix Object and return it
-            return Matrix(result)
-        else:
-            return None
-        
+                raise ArithmeticError("col(a) is not equal to row(b)")
 
     def transpose(self, matrix):
         pass
