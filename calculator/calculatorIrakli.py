@@ -26,21 +26,31 @@ def __add__(self, other):
 
 
 # Zero Matrix
-def zero_matrix(rows, cols):
-  matrix = []
-  while len(matrix) < rows:
-    matrix.append([])
-    while len(matrix[-1]) < cols:
-      matrix[-1].append(0.0)
+def empty_matrix(r, c):
+    Matrix = []
+    while len(Matrix) < r:
+        Matrix.append([])
+        while len(Matrix[-1]) < c:
+            Matrix[-1].append(0.0)
 
-  return matrix
-# Identity Matrix
-def identity_matrix(m):
-  idmatrix = zero_matrix(m,m)
-  for element in range(m):
-    idmatrix[i][i] = 1.0
+    return Matrix
 
-  return idmatrix
+def identity_m(n,k):
+# creates square matrix of dimensions nxn
+# puts value k on diagonals
+
+    I = empty_matrix(n, n)
+    for i in range(n):
+        I[i][i] = k
+
+    return I
+
+def get_dimensions(m):
+
+    return [len(m), len(m[0])]
+
+
+
 
 
 def eigenvalues(A):
