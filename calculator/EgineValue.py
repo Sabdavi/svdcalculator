@@ -1,159 +1,119 @@
-import numpy as np
+
 from calculator import root_calculator
 
 
-def get_dimensions(matrix):
-    """
-    Return the dimensions of any given matrix
-
-    :param matrix: A list of lists of `float` values.
-    :return: A list of `float` values describing the dimensions of the matrix
-    """
-    return [len(matrix), len(matrix[0])]
 
 
-def find_determinant(matrix, excluded=1):
-    """
-    Return the value of the determinant of any given matrix
-
-    :param matrix: A list of lists of `float` values.
-    :param excluded: A `float` value which refers to the value at the
-                     row and column along which elements were crossed out.
-    :return: A `float` value which is the determinant of the matrix.
-    """
-    dimensions = get_dimensions(matrix)
-    if dimensions == [2, 2]:
-        return excluded * ((matrix[0][0] * matrix[1][1]) - (matrix[0][1] * matrix[1][0]))
-    else:
-        new_matrices = []
-        excluded = []
-        exclude_row = 0
-        for exclude_column in range(dimensions[1]):
-            tmp = []
-            excluded.append(matrix[exclude_row][exclude_column])
-            for row in range(1, dimensions[0]):
-                tmp_row = []
-                for column in range(dimensions[1]):
-                    if (row != exclude_row) and (column != exclude_column):
-                        tmp_row.append(matrix[row][column])
-                tmp.append(tmp_row)
-            new_matrices.append(tmp)
-        determinants = [find_determinant(new_matrices[j], excluded[j]) for j in range(len(new_matrices))]
-        determinant = 0
-        for i in range(len(determinants)):
-            determinant += ((-1)**i)*determinants[i]
-        return determinant
+def matrix_dimensions(m):
+  """
+  Following function returns dimensions of any given matrix m
+  @param m: matrix (list of lists) with float values.
+  @return: a list of values showing matrix dimensions
+  """
+  return [len(m),len(m[0])]
 
 
-def list_multiply(list1, list2):
-    """
-    Return the multiplication of two lists by treating each list as a factor.
-    For example, to multiply two lists of length two, use the FOIL method.
-
-    :param list1: A list of `float` values.
-    :param list2: A list of `float` values.
-    :return: A list of `float` values containing the result of the
-             multiplication.
-    """
-    result = [0 for _ in range(len(list1) + len(list2) - 1)]
-    for i in range(len(list1)):
-        for j in range(len(list2)):
-            result[i+j] += list1[i] * list2[j]
-    return result
-
-
-def list_add(list1, list2, sub=1):
-    """
-    Return the element wise addition of two lists
-
-    :param list1: A list of `float` values.
-    :param list2: A list of `float` values.
-    :param sub: An `int` value to multiply each element in the second list by.
-                Default is set to 1, and setting to -1 results in subtraction.
-    :return: A list of `float` values containing the result of the addition.
-    """
-    return [i + (sub*j) for i, j in zip(list1, list2)]
-
-
-def determinant_equation(matrix, excluded=[1, 0]):
-    """
-    Return the equation describing the determinant in terms of some unknown
-    variable. The index of each element in the list represents the power of the
-    unknown variable. For example, [1, 2, 3] corresponds to the equation
-    1 + 2x + 3x^2.
-
-    :param matrix: A list of lists of `float` values.
-    :param excluded: A list of `float` values which refers to the value at the
-                     row and column along which elements were crossed out.
-    :return: A list of `float` values corresponding to an equation (as
-             described above)
-    """
-    dimensions = get_dimensions(matrix)
-    if dimensions == [2, 2]:
-        tmp = list_add(list_multiply(matrix[0][0], matrix[1][1]), list_multiply(matrix[0][1], matrix[1][0]), sub=-1)
-        return list_multiply(tmp, excluded)
-    else:
-        new_matrices = []
-        excluded = []
-        exclude_row = 0
-        for exclude_column in range(dimensions[1]):
-            tmp = []
-            excluded.append(matrix[exclude_row][exclude_column])
-            for row in range(1, dimensions[0]):
-                tmp_row = []
-                for column in range(dimensions[1]):
-                    if (row != exclude_row) and (column != exclude_column):
-                        tmp_row.append(matrix[row][column])
-                tmp.append(tmp_row)
-            new_matrices.append(tmp)
-        determinant_equations = [determinant_equation(new_matrices[j],
-                            excluded[j]) for j in range(len(new_matrices))]
-        dt_equation = [sum(i) for i in zip(*determinant_equations)]
-        return dt_equation
-
-
-def identity_matrix(dimensions):
+def identity_m(dims):
     """
     Return an identity matrix of any given dimensions.
-
     :param dimensions: A list of `float` values.
     :return: A list of lists of `float` values containing the identity matrix.
     """
-    matrix = [[0 for j in range(dimensions[1])] for i in range(dimensions[0])]
-    for i in range(dimensions[0]):
-        matrix[i][i] = 1
-    return matrix
+    m = [[0 for k in range(dims[1])] for j in range(dims[0])]
+    for j in range(dims[0]):
+        m[j][j] = 1
+    return m
 
 
-def characteristic_equation(matrix):
-    """
-    Return the characteristic equation of a matrix.
-
-    :param matrix: A list of lists of `float` values.
-    :return: A list of lists of `float` values containing the characteristic
-             equation.
-    """
-    dimensions = get_dimensions(matrix)
-    return [[[a, -b] for a, b in zip(i, j)] for i, j in zip(matrix,
-            identity_matrix(dimensions))]
-
-
-def find_eigenvalues(matrix):
-    """
-    Return the eigenvalues of a matrix.
-
-    :param matrix: A list of lists of `float` values.
-    :return: A numpy array of `float` values containing the eigenvalues.
-    """
-    dt_equation = determinant_equation(characteristic_equation(matrix))
-    return root_calculator.RootCalculator.solve(dt_equation[::-1])
+def multiplying_lists(l1,l2):
+  """
+  Using FOIL (First out, inner last) method to multiply to list 
+  lists are treating as factors.
+  l1 and l2 are lists of float values
+  returns the result of multiplication with is also a float value
+  """
+  res = [0 for i in range(len(l1)+len(l2)-1)]
+  for j in range(len(l1)):
+    for k in range(len(l2)):
+      res[j+k] += l1[j] * l2[k]
+  return res
 
 
-if __name__ == "__main__":
-    A = [[6, 1, -1],
-         [0, 7, 0],
-         [3, -1, 2]]
-    eigenvalues = find_eigenvalues(A)
-    print(eigenvalues)
+def adding_lists(l1,l2, subtract=1):
+
+  """
+  Following function calculates the addition of two lists
+  addition is done element wise
+  parameter subtract, if set to -1, does subtraction instead of addition
+  the function returns the result of addition as a list of float values.
+  """
+  return [i+(subtract*j) for i,j in zip(l1,l2)]
+
+def det_eq(m,exclude=[1,0]):
+"""
+Given function returns determinan equation in terms of x variable.
+index of the elements in the list represents the power of x variable.
+E.g. [a,b,c] corresponds to a + bx + cx^2
+
+parameters:
+m - matrix presented as a list of lists with float values.
+exclude - values of rows and columns of matrices that are excluded during calculation. for 2x2 matrix [1,0] are excluded by default.
+
+returns:
+list of respective float values of determinant equation.
+"""
+  dims = matrix_dimensions(m)
+  if dims == [2,2]:
+    temp = adding_lists(multiplying_lists(m[0][0],m[1][1]),multiplying_lists(m[0][1],m[1][0]),subtract=-1)
+    return multiplying_lists(temp,exclude)
+  else:
+    exclude=[]
+    new_m=[]
+    exclude_r = 0
+    for exclude_col in range(dims[1]):
+      temp=[]
+      exclude.append(m[exclude_r][exclude_col])
+      for row in range(1,dims[0]):
+        temp_row =[]
+        for col in range(dims[1]):
+          if (row!= exclude_r) & (col != exclude_col):
+            temp_row.append(m[row][col])
+        temp.append(temp_row)
+      new_m.append(temp)
+    det_equations = [det_eq(new_m[j],exclude[j]) for j in range(len(new_m))]
+
+    final_det_eq = [sum(el) for el in zip(*det_equations)]
+    
+    return final_det_eq
+
+def charact_eq(m):
+"""
+The given function gives the characeristic equation of a given matrix m.
+
+parameters:
+m : matrix presented as a list of lists with float values.
+
+returns:
+list of lists with float values corresponding to characteristic equation.
+"""
+  dims = matrix_dimensions(m)
+
+  return [[[x,-y] for x,y in zip(i,j)] for i,j in zip(m,identity_m(dims))]
+
+
+def eigenvalues_m(m):
+"""
+The given function gives eigenvalues of matrix m in an array of float values.
+
+parameter:
+m - matrix presented as a list of lists with float values.
+returns: array of float values with corresponding eigenvalues of matrix m
+"""
+  final_det_eq = det_eq(charact_eq(m))
+  return root_calculator.RootCalculator.solve(final_det_eq[::-1])
+
+
+
+
 
 
