@@ -27,10 +27,10 @@ def identity_m(dims):
 
 def multiplying_lists(l1,l2):
   """
-  Using FOIL (First out, inner last) method to multiply to list 
-  lists are treating as factors.
-  l1 and l2 are lists of float values
-  returns the result of multiplication with is also a float value
+  Using FOIL (First Outside, Inside Last) method to multiply two lists. 
+  The Lists are treated as factors.
+  l1 and l2 are lists of float values.
+  returns the result of multiplication which is also a list containing float values
   """
   res = [0 for i in range(len(l1)+len(l2)-1)]
   for j in range(len(l1)):
@@ -42,16 +42,15 @@ def multiplying_lists(l1,l2):
 def adding_lists(l1,l2, subtract=1):
 
   """
-  Following function calculates the addition of two lists
-  addition is done element wise
-  parameter subtract, if set to -1, does subtraction instead of addition
+  Following function calculates the addition of two lists.
+  parameter subtract, if set to -1, does subtraction instead of addition.
   the function returns the result of addition as a list of float values.
   """
   return [i+(subtract*j) for i,j in zip(l1,l2)]
 
 def det_eq(m,exclude=[1,0]):
 """
-Given function returns determinan equation in terms of x variable.
+Given function returns determinant equation in terms of x variable.
 index of the elements in the list represents the power of x variable.
 E.g. [a,b,c] corresponds to a + bx + cx^2
 
