@@ -16,8 +16,8 @@ def matrix_dimensions(m):
 def identity_m(dims):
     """
     Return an identity matrix of any given dimensions.
-    :param dims: A list of `float` values.
-    :return: A list of lists of `float` values containing the identity matrix.
+    :param dims: A list of values.
+    :return: A list of lists of values containing the identity matrix.
     """
     m = [[0 for k in range(dims[1])] for j in range(dims[0])]
     for j in range(dims[0]):
