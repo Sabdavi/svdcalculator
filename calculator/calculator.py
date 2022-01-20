@@ -2,17 +2,17 @@ from copy import deepcopy
 from root_calculator import RootCalculator
 
 class Calculator:
-    def __init__():
+    def __init__(self):
         pass
 
     @staticmethod
-    def __is_square(matrix):
+    def __is_square(self, matrix):
         for row in matrix:
             if len(matrix) != len(row):
                 return False
         return True
 
-    def __create_empty_matrix(rows, cols):
+    def __create_empty_matrix(self,rows, cols):
         empty_matrix = []
         while len(empty_matrix) < rows:
             empty_matrix.append([])
@@ -21,18 +21,18 @@ class Calculator:
 
         return empty_matrix
 
-    def round(matrix):
+    def round(self,matrix):
         for i in range(len(matrix)):
             for j in range(len(matrix[0])):
                 matrix[i][j] = round(matrix[i][j])
         return matrix
     
     @staticmethod
-    def get_column(matrix, col):
+    def get_column(self,matrix, col):
         return [row[col] for row in matrix]
 
     @staticmethod
-    def __dot_product(v1, v2):
+    def __dot_product(self,v1, v2):
         size = len(v1)
         result = 0
         for i in range(size):
@@ -40,24 +40,24 @@ class Calculator:
         return result
 
     @staticmethod
-    def __del_row(matrix, row):
+    def __del_row(self,matrix, row):
         clone = deepcopy(matrix)
         del clone[row]
         return clone
 
     @staticmethod
-    def __del_column(matrix, col):
+    def __del_column(self,matrix, col):
         # removing the the element with index "col" of from every row
         # use of List comprehension
         return [row[:col] + row[col + 1:] for row in matrix]
 
     @staticmethod
-    def __del_row_col(matrix, row, col):
+    def __del_row_col(self,matrix, row, col):
         reduced_matrix = Calculator.__del_row(Calculator.__del_column(matrix, col), row)
         return reduced_matrix
 
     @staticmethod
-    def calculate_determinant(matrix):
+    def calculate_determinant(self,matrix):
         if not Calculator.__is_square(matrix):
             raise ArithmeticError('The matrix should be square')
         rows = len(matrix)
@@ -72,7 +72,7 @@ class Calculator:
             return result
 
     @staticmethod
-    def multiply(matrix1, matrix2):
+    def multiply(self,matrix1, matrix2):
         # a variable to store the final multiplication result (a 2d array)
         result = []
         # if the passed argument if a scalar (float,int) perform scalar multiplication
@@ -82,7 +82,7 @@ class Calculator:
                       matrix1.mMatrix]
 
         # if the passed argument is another Matrix object
-        elif isinstance(matrix2, list):
+        elif isinstance(self,matrix2, list):
             # if the the condition for matrix multiplication applies (columns of matrix1 = rows of matrix2)
             if len(matrix1[0]) == len(matrix2):
                 for i in range(len(matrix1)):
@@ -98,7 +98,7 @@ class Calculator:
             else:
                 raise ArithmeticError("col(a) is not equal to row(b)")
 
-    def transpose(matrix):
+    def transpose(self,matrix):
         """
         Transpose of a matrix. Each elements [i,j] of the transposed matrix is just the [j,i] elements of the old matrix
         :return:
@@ -111,7 +111,7 @@ class Calculator:
         return new_matrix
     
     
-    def __add__(other):
+    def add(self,other):
         #Creating a new matrix where the result of addition will be stored
         new_matrix = []
 
@@ -127,7 +127,7 @@ class Calculator:
         return new_matrix
     
 
-    def subtract(matrix_a, matrix_b):
+    def subtract(self,matrix_a, matrix_b):
         rows_a = len(matrix_a)
         cols_a = len(matrix_a[0])
         rows_b = len(matrix_b)
@@ -143,7 +143,7 @@ class Calculator:
 
         return matrix
 
-    def row_reduction(matrix):
+    def row_reduction(self,matrix):
         if not matrix:
             raise ArithmeticError('Matrices are NOT provided')
         lead = 0
@@ -170,7 +170,7 @@ class Calculator:
                         matrix[i] = [iv - lv * rv for rv, iv in zip(matrix[r], matrix[i])]
             lead += 1
 
-    def matrix_dimensions(m):
+    def matrix_dimensions(self,m):
       """
       Following function returns dimensions of any given matrix m
       @param m: matrix (list of lists) with float values.
@@ -179,7 +179,7 @@ class Calculator:
       return [len(m),len(m[0])]
 
 
-    def identity_m(dims):
+    def identity_m(self,dims):
         """
         Return an identity matrix of any given dimensions.
         :param dims: A list of values.
@@ -191,7 +191,7 @@ class Calculator:
         return m
 
 
-    def multiplying_lists(l1,l2):
+    def multiplying_lists(self,l1,l2):
       """
       Using FOIL (First Outside, Inside Last) method to multiply two lists. 
       The Lists are treated as factors.
@@ -205,7 +205,7 @@ class Calculator:
       return res
 
 
-    def adding_lists(l1,l2, subtract=1):
+    def adding_lists(self,l1,l2, subtract=1):
 
       """
       Following function calculates the addition of two lists.
@@ -214,7 +214,7 @@ class Calculator:
       """
       return [i+(subtract*j) for i,j in zip(l1,l2)]
 
-    def det_eq(m,exclude=[1,0]):
+    def det_eq(self,m,exclude=[1,0]):
       """
       Given function returns determinant equation in terms of x variable.
       index of the elements in the list represents the power of x variable.
@@ -225,7 +225,7 @@ class Calculator:
       returns:
       list of respective float values of determinant equation.
       """
-      dims = matrix_dimensions(m)
+      dims = matrix_dimensions(self,m)
       if dims == [2,2]:
         temp = adding_lists(multiplying_lists(m[0][0],m[1][1]),multiplying_lists(m[0][1],m[1][0]),subtract=-1)
         return multiplying_lists(temp,exclude)
@@ -249,7 +249,7 @@ class Calculator:
 
         return final_det_eq
 
-    def charact_eq(m):
+    def charact_eq(self,m):
       """
       The given function gives the characeristic equation of a given matrix m.
       parameters:
@@ -262,7 +262,7 @@ class Calculator:
       return [[[x,-y] for x,y in zip(i,j)] for i,j in zip(m,identity_m(dims))]
 
 
-    def eigenvalues_m(m):
+    def eigenvalues_m(self,m):
       """
       The given function gives eigenvalues of matrix m in an array of float values.
       parameter:
