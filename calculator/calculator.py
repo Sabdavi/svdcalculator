@@ -170,7 +170,7 @@ class Calculator:
                         matrix[i] = [iv - lv * rv for rv, iv in zip(matrix[r], matrix[i])]
             lead += 1
 
-    def matrix_dimensions(self,m):
+    def matrix_dimensions(m):
       """
       Following function returns dimensions of any given matrix m
       @param m: matrix (list of lists) with float values.
@@ -179,7 +179,7 @@ class Calculator:
       return [len(m),len(m[0])]
 
 
-    def identity_m(self,dims):
+    def identity_m(dims):
         """
         Return an identity matrix of any given dimensions.
         :param dims: A list of values.
@@ -191,7 +191,7 @@ class Calculator:
         return m
 
 
-    def multiplying_lists(self,l1,l2):
+    def multiplying_lists(l1,l2):
       """
       Using FOIL (First Outside, Inside Last) method to multiply two lists. 
       The Lists are treated as factors.
@@ -205,7 +205,7 @@ class Calculator:
       return res
 
 
-    def adding_lists(self,l1,l2, subtract=1):
+    def adding_lists(l1,l2, subtract=1):
 
       """
       Following function calculates the addition of two lists.
@@ -214,7 +214,7 @@ class Calculator:
       """
       return [i+(subtract*j) for i,j in zip(l1,l2)]
 
-    def det_eq(self,m,exclude=[1,0]):
+    def det_eq(m,exclude=[1,0]):
       """
       Given function returns determinant equation in terms of x variable.
       index of the elements in the list represents the power of x variable.
@@ -225,7 +225,7 @@ class Calculator:
       returns:
       list of respective float values of determinant equation.
       """
-      dims = matrix_dimensions(self,m)
+      dims = matrix_dimensions(m)
       if dims == [2,2]:
         temp = adding_lists(multiplying_lists(m[0][0],m[1][1]),multiplying_lists(m[0][1],m[1][0]),subtract=-1)
         return multiplying_lists(temp,exclude)
@@ -249,7 +249,7 @@ class Calculator:
 
         return final_det_eq
 
-    def charact_eq(self,m):
+    def charact_eq(m):
       """
       The given function gives the characeristic equation of a given matrix m.
       parameters:
@@ -262,7 +262,7 @@ class Calculator:
       return [[[x,-y] for x,y in zip(i,j)] for i,j in zip(m,identity_m(dims))]
 
 
-    def eigenvalues_m(self,m):
+    def eigenvalues_m(m):
       """
       The given function gives eigenvalues of matrix m in an array of float values.
       parameter:
