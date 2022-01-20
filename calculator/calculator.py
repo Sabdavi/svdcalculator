@@ -2,7 +2,7 @@ from copy import deepcopy
 from calculator import root_calculator
 
 class Calculator:
-    def __init__(self):
+    def __init__():
         pass
 
     @staticmethod
@@ -12,7 +12,7 @@ class Calculator:
                 return False
         return True
 
-    def __create_empty_matrix(self, rows, cols):
+    def __create_empty_matrix(rows, cols):
         empty_matrix = []
         while len(empty_matrix) < rows:
             empty_matrix.append([])
@@ -21,7 +21,7 @@ class Calculator:
 
         return empty_matrix
 
-    def round(self, matrix):
+    def round(matrix):
         for i in range(len(matrix)):
             for j in range(len(matrix[0])):
                 matrix[i][j] = round(matrix[i][j])
@@ -98,7 +98,7 @@ class Calculator:
             else:
                 raise ArithmeticError("col(a) is not equal to row(b)")
 
-    def transpose(self, matrix):
+    def transpose(matrix):
         """
         Transpose of a matrix. Each elements [i,j] of the transposed matrix is just the [j,i] elements of the old matrix
         :return:
@@ -111,7 +111,7 @@ class Calculator:
         return new_matrix
     
     
-    def __add__(self, other):
+    def __add__(other):
         #Creating a new matrix where the result of addition will be stored
         new_matrix = []
 
@@ -127,7 +127,7 @@ class Calculator:
         return new_matrix
     
 
-    def subtract(self, matrix_a, matrix_b):
+    def subtract(matrix_a, matrix_b):
         rows_a = len(matrix_a)
         cols_a = len(matrix_a[0])
         rows_b = len(matrix_b)
@@ -143,7 +143,7 @@ class Calculator:
 
         return matrix
 
-    def row_reduction(self, matrix):
+    def row_reduction(matrix):
         if not matrix:
             raise ArithmeticError('Matrices are NOT provided')
         lead = 0
