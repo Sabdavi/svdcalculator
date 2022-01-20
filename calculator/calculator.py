@@ -1,5 +1,5 @@
 from copy import deepcopy
-from calculator import root_calculator
+from root_calculator import RootCalculator
 
 class Calculator:
     def __init__():
