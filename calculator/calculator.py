@@ -111,18 +111,18 @@ class Calculator:
         return new_matrix
     
     
-    def add(self,other):
+    def add(matrix,other):
         #Creating a new matrix where the result of addition will be stored
         new_matrix = []
 
         # Checking if the dimensions of two matrices are the same
-        if len(self.new_matrix) != len(other.new_matrix) or len(self.new_matrix[0]) != len(other.new_matrix[0]):
+        if len(matrix) != len(other) or len(matrix[0]) != len(other[0]):
           raise ArithmeticError('Matrices are not the same size!')
         # Using for-loop to add up the elements of two matrices
-        for i in range(len(self.new_matrix)):
+        for i in range(len(self.matrix)):
             new_matrix.append([])
-            for j in range(len(self.new_matrix[0])):
-                new_matrix[i].append(self.new_matrix[i][j] + other.new_matrix[i][j])
+            for j in range(len(matrix[0])):
+                new_matrix[i].append(matrix[i][j] + other[i][j])
 
         return new_matrix
     
